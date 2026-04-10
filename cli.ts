@@ -1,5 +1,15 @@
 import todo from './core.ts';
 const command = process.argv[2];
+//ajuda
+if (command === "help") {
+  console.log("Comandos disponíveis:");
+  console.log("add <tarefa> - adiciona uma tarefa");
+  console.log("list - lista todas as tarefas");
+  console.log("update <indice> <nova tarefa> - atualiza uma tarefa");
+  console.log("remove <indice> - remove uma tarefa");
+  console.log("help - mostra os comandos");
+  process.exit(0);
+}
 
 if (command === "add") {
   const item = process.argv[3];
