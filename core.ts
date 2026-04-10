@@ -1,6 +1,6 @@
 const filename = __dirname + '/data.todo.json';
 let list: string[] = null!;
-
+//da load
 async function loadFromFile() {
   if (list !== null)
     return
@@ -19,32 +19,34 @@ async function saveToFile() {
 }
 //adiciona 
 export async function addItem(item: string) {
-  await loadFromFile(); // Garante que os dados estão carregados em memória
-  list.push(item);      // Adiciona a nova tarefa ao array `list`
-  await saveToFile();   // Salva os dados atualizados no arquivo JSON
+  await loadFromFile();
+  const agora = new Date();
+  const data = agora.toLocaleDateString("pt-BR");
+  const hora = agora.toLocaleTimeString("pt-BR");
+  const itemComData = item + " [criado em " + data + " " + hora + "]";
+  list.push(itemComData);
+  await saveToFile();
 }
 //read
 export async function getItems() {
-  await loadFromFile(); // Garante que os dados estão carregados em memória
-  return list;         // Retorna o array de tarefas
+  await loadFromFile();
+  return list;
 }
 //update/atualiza
 export async function updateItem(index: number, newItem: string) {
-  await loadFromFile(); // Garante que os dados estão carregados em memória
-  // Verifica se o índice é válido
+  await loadFromFile();
   if (index < 0 || index >= list.length)
     throw new Error("Índice fora dos limites"); 
-  list[index] = newItem; // Atualiza a tarefa no array `list`
-  await saveToFile();    // Salva os dados atualizados no arquivo JSON
+  list[index] = newItem;
+  await saveToFile();
 }
 //remove
 export async function removeItem(index: number) {
-  await loadFromFile(); // Garante que os dados estão carregados em memória
-  // Verifica se o índice é válido
+  await loadFromFile();
   if (index < 0 || index >= list.length)
     throw new Error("Índice fora dos limites");
-  list.splice(index, 1); // Remove a tarefa do array `list`
-  await saveToFile();    // Salva os dados atualizados no arquivo JSON
+  list.splice(index, 1);
+  await saveToFile();
 }
 //exporta funções para fora/ para uso externo
 export default { addItem, getItems, updateItem, removeItem };
